@@ -1,0 +1,32 @@
+package prestashop.tests.functional.mainPage;
+
+import io.qameta.allure.Issue;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import prestashop.constants.TestGroup;
+import prestashop.steps.FooterSteps;
+import prestashop.tests.BaseTest;
+
+public class SubscribeTest extends BaseTest {
+
+    @Test(groups = TestGroup.FUNCTIONAL)
+    @Issue("FUNC-01")
+    public void shouldDisplaySubscribeButtonTextInUppercase() {
+        String raw = footerSteps.getSubscribeButtonValue();
+        String transform = footerSteps.getSubscribeButtonTextTransform();
+
+        Assert.assertEquals(raw, "Subscribe",
+                "Subscribe button text should equal Subscribe ignoring case in DOM");
+        Assert.assertEquals(transform, "uppercase",
+                "Subscribe button must be visually uppercase via CSS");
+    }
+
+    @Test(groups = TestGroup.FUNCTIONAL)
+    @Issue("FUNC-08")
+    public void shouldDisplayCorrectNewsletterLabelText() {
+        String labelText = footerSteps.getNewsletterLabelText();
+        Assert.assertEquals(labelText.trim(),
+                "Get our latest news and special sales",
+                "Newsletter label text should match expected value");
+    }
+}
