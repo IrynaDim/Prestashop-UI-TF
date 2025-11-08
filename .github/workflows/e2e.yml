@@ -46,4 +46,4 @@ jobs:
         run: |
           echo "### ✅ Allure E2E UI report published successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 [Open Allure E2E UI Report](https://irynadim.github.io/PrestaShop-UI-TF/allure-e2e-ui/)" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [Open Allure E2E UI Report](https://irynadim.github.io/Prestashop-UI-TF/allure-e2e-ui/)" >> $GITHUB_STEP_SUMMARY
