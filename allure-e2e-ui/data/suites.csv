@@ -1,2 +1,2 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","16243","shouldCompleteCheckoutSuccessfully","E2E Suite","Sat Nov 08 00:35:06 UTC 2025","passed","Sat Nov 08 00:35:22 UTC 2025","prestashop.tests.e2e.AddProductsToCartTest","E2E Tests","prestashop.tests.e2e.AddProductsToCartTest","shouldCompleteCheckoutSuccessfully"
+"","14907","shouldCompleteCheckoutSuccessfully","E2E Suite","Sat Nov 08 00:52:17 UTC 2025","passed","Sat Nov 08 00:52:32 UTC 2025","prestashop.tests.e2e.AddProductsToCartTest","E2E Tests","prestashop.tests.e2e.AddProductsToCartTest","shouldCompleteCheckoutSuccessfully"
