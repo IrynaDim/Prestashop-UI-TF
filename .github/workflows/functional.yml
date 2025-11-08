@@ -29,15 +29,23 @@ jobs:
         run: |
           allure generate target/allure-results --clean -o allure-report
           touch allure-report/.nojekyll
-          
+
+      - name: Clean old allure-functional-ui folder
+        run: |
+          git fetch origin gh-pages || true
+          git checkout gh-pages || git checkout --orphan gh-pages
+          rm -rf allure-functional-ui || true
+          git checkout -
+
       - name: Deploy Allure Report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-report
+          publish_dir: allure-report/
           destination_dir: allure-functional-ui
+          keep_files: true          
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
 
