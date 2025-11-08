@@ -29,10 +29,7 @@ jobs:
         run: |
           allure generate target/allure-results --clean -o allure-report
           touch allure-report/.nojekyll
-
-      - name: Ensure root index.html exists
-        run: echo '<meta http-equiv="refresh" content="0; url=./allure-functional-ui/">' > allure-report/index.html
-
+          
       - name: Deploy Allure Report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
@@ -49,4 +46,4 @@ jobs:
         run: |
           echo "### ✅ Allure Functional UI report published successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 [Open Allure Functional UI Report](https://irynadim.github.io/PrestaShop-UI-TF/allure-functional-ui/)" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [Open Allure Functional UI Report](https://irynadim.github.io/Prestashop-UI-TF/allure-functional-ui/)" >> $GITHUB_STEP_SUMMARY
