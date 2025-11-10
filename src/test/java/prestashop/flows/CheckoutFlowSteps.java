@@ -1,7 +1,6 @@
 package prestashop.flows;
 
 import com.microsoft.playwright.Page;
-import io.qameta.allure.Step;
 import prestashop.model.dto.ProductItem;
 import prestashop.steps.*;
 
@@ -24,8 +23,8 @@ public class CheckoutFlowSteps extends BaseSteps {
         this.shoppingCartSteps = new ShoppingCartSteps(page);
     }
 
-    @Step("Add multiple products to cart")
     public void addProductsToCart(ProductItem... items) {
+        step("Start adding multiple products to cart. Total items: {}", items.length);
         for (int i = 0; i < items.length; i++) {
             ProductItem item = items[i];
 
