@@ -57,6 +57,9 @@ To view the report locally, you can run:
 allure serve target/allure-results
 ```
 
+Allure logging exemples:
+![img_2.png](img_2.png)
+
 Each failed test automatically attaches:
 A screenshot of the page at the moment of failure
 The current page URL
