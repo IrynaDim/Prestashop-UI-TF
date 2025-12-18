@@ -1,0 +1,2 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","16456","shouldCompleteCheckoutSuccessfully","E2E Suite","2025-12-18","passed","2025-12-18","prestashop.tests.e2e.AddProductsToCartTest","E2E Tests","prestashop.tests.e2e.AddProductsToCartTest","shouldCompleteCheckoutSuccessfully"
