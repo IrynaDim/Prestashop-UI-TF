@@ -2,7 +2,6 @@ package prestashop.steps;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import lombok.extern.slf4j.Slf4j;
 import prestashop.model.dto.ProductInfo;
 import prestashop.pages.AllProductsPage;
@@ -23,34 +22,40 @@ public class AllProductsSteps extends BaseSteps {
     public List<ProductInfo> getProductsBySorting(String sortBy) {
         log.info("[STEP] Sort products by option '{}'", sortBy);
 
-        productsPage.clickSortByDropSection();
+        productsPage.getSortByButton().click();
+        productsPage.selectSortOption(sortBy);
+        Locator firstProductBefore = productsPage.getProductItems().first();
+        String firstTitleBefore = firstProductBefore.textContent();
 
-        Locator option = productsPage.getSortOptionByName(sortBy);
-        option.waitFor();
-        option.click();
+        page.waitForCondition(() -> {
+            String firstTitleAfter =
+                    productsPage.getProductItems().first().textContent();
+            return !firstTitleAfter.equals(firstTitleBefore);
+        });
 
-        Locator sortDropdown = productsPage.getSortByDropSection();
-        sortDropdown.waitFor();
+        Locator products = productsPage.getProductItems();
+        products.first().waitFor();
 
-        PlaywrightAssertions.assertThat(sortDropdown).containsText(sortBy);
+        return collectProducts(products);
+    }
 
-        Locator productsLocator = productsPage.getProductItems();
-        productsLocator.first().waitFor();
-
+    private List<ProductInfo> collectProducts(Locator productsLocator) {
         int count = productsLocator.count();
         List<ProductInfo> products = new ArrayList<>();
+
         for (int i = 0; i < count; i++) {
             Locator item = productsLocator.nth(i);
-            String rawTitle = productsPage.getProductTitle(item).textContent().trim();
+            String title = productsPage.getProductTitle(item).textContent().trim();
+
             boolean hasDiscount = productsPage.getProductRegularPrice(item).count() > 0;
             String rawPrice = hasDiscount
                     ? productsPage.getProductRegularPrice(item).textContent()
                     : productsPage.getProductPrice(item).textContent();
+
             double price = PriceUtil.parsePrice(rawPrice);
-            products.add(new ProductInfo(rawTitle, price));
+            products.add(new ProductInfo(title, price));
         }
         return products;
     }
-
 
 }
