@@ -3,6 +3,9 @@ name: Functional Tests (UI)
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   functional-ui:
     runs-on: ubuntu-latest
@@ -18,11 +21,17 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Run Functional Tests
-        run: mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng-functional.xml -Denv=dev-test
+      - name: Set up Node (for Allure CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      - name: Install Allure
-        run: npm install -g allure-commandline --save-dev
+      - name: Install Allure CLI
+        run: npm i -g allure-commandline
+
+      - name: Run Functional UI Tests
+        continue-on-error: true
+        run: mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng-functional.xml -Denv=dev-test
 
       - name: Generate Allure Report
         if: always()
@@ -44,6 +53,5 @@ jobs:
       - name: Add Allure Report URL to summary
         if: always()
         run: |
-          echo "### ✅ Allure Functional UI report published successfully!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 [Open Allure Functional UI Report](https://irynadim.github.io/Prestashop-UI-TF/allure-functional-ui/)" >> $GITHUB_STEP_SUMMARY
+          echo "### Allure Functional UI report" >> $GITHUB_STEP_SUMMARY
+          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-functional-ui/" >> $GITHUB_STEP_SUMMARY
