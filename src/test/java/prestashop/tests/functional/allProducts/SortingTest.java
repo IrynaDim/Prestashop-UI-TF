@@ -24,7 +24,7 @@ public class SortingTest extends BaseTest {
     @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Name, A -> Z - list is alphabetically ascending")
     @Issue("FUNC-03")
     public void shouldSortProductsByNameAscending() {
-        List<ProductInfo> products = allProductsSteps.getProductsBySorting("Name, A to Z");
+        List<ProductInfo> products = allProductsSteps.getProductsBySorting("Name, A to F");
         assertNotEmpty(products, "Product list should not be empty");
 
         assertSorted(getTitles(products), Comparator.naturalOrder(),
