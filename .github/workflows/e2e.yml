@@ -21,14 +21,13 @@ jobs:
       - name: Run E2E Tests
         run: mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng-e2e.xml -Denv=dev-test
 
-      - name: Install Allure
-        run: npm install -g allure-commandline --save-dev
-
       - name: Generate Allure Report
         if: always()
-        run: |
-          allure generate target/allure-results --clean -o allure-report
-          touch allure-report/.nojekyll
+        uses: simple-elf/allure-report-action@v1.9
+        with:
+          allure_results: target/allure-results
+          allure_report: allure-report
+          keep_history: true
 
       - name: Deploy Allure Report to GitHub Pages
         if: always()
