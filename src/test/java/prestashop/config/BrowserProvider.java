@@ -20,6 +20,7 @@ public final class BrowserProvider {
 
         BrowserType.LaunchOptions options = new BrowserType.LaunchOptions()
                 .setHeadless(headless)
+                .setSlowMo(showBrowser ? 150 : 0)
                 .setArgs(List.of("--no-sandbox", "--disable-dev-shm-usage"));
 
         log.info("Launching browser: {} | UI mode={} | headless={}",

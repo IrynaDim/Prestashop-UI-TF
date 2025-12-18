@@ -53,6 +53,15 @@ public abstract class BaseSteps {
                 .setTimeout(timeoutMs));
     }
 
+    protected void waitForPopupOpen(Locator popup) {
+        popup.waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.ATTACHED));
+
+        page.waitForCondition(() ->
+                "false".equals(popup.getAttribute("aria-hidden"))
+        );
+    }
+
     protected void step(String message, Object... args) {
         String formatted = (args == null || args.length == 0)
                 ? message

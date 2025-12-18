@@ -16,6 +16,12 @@ public class ShoppingCartSteps extends BaseSteps {
 
     public CompleteOrderSteps clickProceedToCheckout() {
         step("Click 'Proceed to checkout' button on shopping cart page");
+        if (shoppingCartPage.isCartEmptyMessage()) {
+            throw new IllegalStateException(
+                    "Cart is empty after clicking 'Add to cart'. " +
+                            "Product was not added — probable demo site lag."
+            );
+        }
         click(shoppingCartPage.getProceedToCheckoutButton());
         return new CompleteOrderSteps(page);
     }
