@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import prestashop.constants.TestGroup;
 import prestashop.model.dto.ProductInfo;
+import prestashop.model.enums.SortingOptions;
 import prestashop.steps.AllProductsSteps;
 import prestashop.tests.BaseTest;
 
@@ -24,7 +25,9 @@ public class SortingTest extends BaseTest {
     @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Name, A -> Z - list is alphabetically ascending")
     @Issue("FUNC-03")
     public void shouldSortProductsByNameAscending() {
-        List<ProductInfo> products = allProductsSteps.getProductsBySorting("Name, A to Z");
+        List<ProductInfo> products =
+                allProductsSteps.getProductsBySorting(SortingOptions.NAME_ASC);
+
         assertNotEmpty(products, "Product list should not be empty");
 
         assertSorted(getTitles(products), Comparator.naturalOrder(),
@@ -34,7 +37,9 @@ public class SortingTest extends BaseTest {
     @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Name, Z -> A - list is alphabetically descending")
     @Issue("FUNC-04")
     public void shouldSortProductsByNameDescending() {
-        List<ProductInfo> products = allProductsSteps.getProductsBySorting("Name, Z to A");
+        List<ProductInfo> products =
+                allProductsSteps.getProductsBySorting(SortingOptions.NAME_DESC);
+
         assertNotEmpty(products, "Product list should not be empty");
 
         assertSorted(getTitles(products), Comparator.reverseOrder(),
@@ -44,7 +49,9 @@ public class SortingTest extends BaseTest {
     @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Price, low -> high - ascending by price")
     @Issue("FUNC-05")
     public void shouldSortProductsByPriceAscending() {
-        List<ProductInfo> products = allProductsSteps.getProductsBySorting("Price, low to high");
+        List<ProductInfo> products =
+                allProductsSteps.getProductsBySorting(SortingOptions.PRICE_ASC);
+
         assertNotEmpty(products, "Product list should not be empty");
 
         assertSorted(getPrices(products), Comparator.naturalOrder(),
@@ -54,7 +61,9 @@ public class SortingTest extends BaseTest {
     @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Price, high -> low - descending by price")
     @Issue("FUNC-06")
     public void shouldSortProductsByPriceDescending() {
-        List<ProductInfo> products = allProductsSteps.getProductsBySorting("Price, high to low");
+        List<ProductInfo> products =
+                allProductsSteps.getProductsBySorting(SortingOptions.PRICE_DESC);
+
         assertNotEmpty(products, "Product list should not be empty");
 
         assertSorted(getPrices(products), Comparator.reverseOrder(),

@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import lombok.extern.slf4j.Slf4j;
 import prestashop.model.dto.ProductInfo;
+import prestashop.model.enums.SortingOptions;
 import prestashop.pages.AllProductsPage;
 import prestashop.util.PriceUtil;
 
@@ -19,11 +20,11 @@ public class AllProductsSteps extends BaseSteps {
         this.productsPage = new AllProductsPage(page);
     }
 
-    public List<ProductInfo> getProductsBySorting(String sortBy) {
-        log.info("[STEP] Sort products by option '{}'", sortBy);
+    public List<ProductInfo> getProductsBySorting(SortingOptions option) {
+        log.info("[STEP] Sort products by option '{}'", option.getUiText());
 
         productsPage.getSortByButton().click();
-        productsPage.selectSortOption(sortBy);
+        productsPage.selectSortOption(option.getUiText());
         Locator firstProductBefore = productsPage.getProductItems().first();
         String firstTitleBefore = firstProductBefore.textContent();
 
