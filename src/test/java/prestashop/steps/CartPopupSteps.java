@@ -2,7 +2,7 @@ package prestashop.steps;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.WaitForSelectorState;
+import com.microsoft.playwright.TimeoutError;
 import prestashop.pages.CartPopupPage;
 
 public class CartPopupSteps extends BaseSteps {
@@ -15,16 +15,19 @@ public class CartPopupSteps extends BaseSteps {
 
     public CartPopupSteps clickContinueShopping() {
         step("Click 'Continue Shopping' button on cart popup");
-        if (popupPage.isCartEmptyMessage()) {
-            throw new IllegalStateException(
-                    "Cart is empty after clicking 'Add to cart'. " +
-                            "Product was not added — probable demo site lag."
-            );
-        }
         Locator btn = popupPage.getContinueShoppingButton();
-        btn.waitFor(new Locator.WaitForOptions()
-                .setState(WaitForSelectorState.VISIBLE));
-
+        try {
+            wait(btn);
+        } catch (TimeoutError e) {
+            if (popupPage.isCartEmptyMessage()) {
+                throw new IllegalStateException(
+                        "Cart is empty after clicking 'Add to cart'. " +
+                                "Product was not added — probable demo site lag."
+                );
+            } else {
+                throw e;
+            }
+        }
         btn.click();
         return this;
     }

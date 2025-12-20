@@ -24,6 +24,6 @@ public class CartPopupPage extends BasePage {
     }
 
     public boolean isCartEmptyMessage() {
-        return page.locator(EMPTY_CART_MESSAGE).isVisible();
+        return frame.locator(EMPTY_CART_MESSAGE).isVisible();
     }
 }

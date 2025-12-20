@@ -29,6 +29,11 @@ public abstract class BaseSteps {
         locator.hover();
     }
 
+    protected void wait(Locator locator) {
+        locator.waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.VISIBLE));
+    }
+
     protected String text(Locator locator) {
         locator.waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE));
@@ -51,15 +56,6 @@ public abstract class BaseSteps {
         locator.waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
                 .setTimeout(timeoutMs));
-    }
-
-    protected void waitForPopupOpen(Locator popup) {
-        popup.waitFor(new Locator.WaitForOptions()
-                .setState(WaitForSelectorState.ATTACHED));
-
-        page.waitForCondition(() ->
-                "false".equals(popup.getAttribute("aria-hidden"))
-        );
     }
 
     protected void step(String message, Object... args) {
