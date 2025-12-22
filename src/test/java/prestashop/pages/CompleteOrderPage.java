@@ -33,9 +33,6 @@ public class CompleteOrderPage extends BasePage {
     private static final String TOTAL_VALUE = ".cart-summary-line.cart-total .value";
 
     private static final String PAYMENT_SECTION = "#checkout-payment-step";
-    private static final String PAYMENT_OPTIONS_CONTAINER = "#payment-options";
-    private static final String PAYMENT_STEP_ACTIVE = "#checkout-payment-step.-current";
-
 
     public CompleteOrderPage(Page page) {
         super(page);
@@ -112,18 +109,6 @@ public class CompleteOrderPage extends BasePage {
     }
 
     // --- Payment section ---
-    public Locator getPaymentSection() {
-        return frame.locator(PAYMENT_SECTION);
-    }
-
-    public Locator getPaymentOptionsContainer() {
-        return frame.locator(PAYMENT_OPTIONS_CONTAINER);
-    }
-
-    public Locator getPaymentStepActive() {
-        return frame.locator(PAYMENT_STEP_ACTIVE);
-    }
-
     public Locator getPaymentOption(String optionText) {
         return frame.locator("label")
                 .filter(new Locator.FilterOptions().setHasText(optionText));
