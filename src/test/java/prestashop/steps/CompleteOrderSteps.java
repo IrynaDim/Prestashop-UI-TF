@@ -1,6 +1,8 @@
 package prestashop.steps;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import lombok.extern.slf4j.Slf4j;
 import prestashop.model.dto.AddressInfo;
 import prestashop.model.dto.PersonalInfo;
@@ -67,11 +69,19 @@ public class CompleteOrderSteps extends BaseSteps {
     // --- PAYMENT ---
     public CompleteOrderSteps selectPaymentMethod(PaymentMethods method) {
         step("Select payment method '{}'", method.getText());
-
-        click(orderPage.getPaymentOption(method.getText()));
+        orderPage.getPaymentStepActive().waitFor(
+                new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(30_000)
+        );
+        Locator option = orderPage.getPaymentOption(method.getText());
+        option.waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.ATTACHED));
+        option.check();
         click(orderPage.getPaymentTermsCheckbox());
         return this;
     }
+
 
     public void placeOrder() {
         step("Place order");
