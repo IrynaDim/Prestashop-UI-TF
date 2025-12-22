@@ -1,0 +1,1 @@
+{"6cbeb55ff9420a4eb31a161df3d46f78":{"statistic":{"failed":0,"broken":1,"skipped":0,"passed":0,"unknown":0,"total":1},"items":[{"uid":"c317ecc499da55ba","status":"broken","statusDetails":"Cart is empty after clicking 'Add to cart'. Product was not added — probable demo site lag.","time":{"start":1766413446333,"stop":1766413480042,"duration":33709}}]}}
