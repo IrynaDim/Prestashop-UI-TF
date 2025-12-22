@@ -1,1 +1,1 @@
-[{"uid":"c41d377cc27ab233","name":"shouldCompleteCheckoutSuccessfully","time":{"start":1766402703399,"stop":1766402749891,"duration":46492},"status":"broken","severity":"normal"}]
+[{"uid":"a4f8c79cbbcdf6ca","name":"shouldCompleteCheckoutSuccessfully","time":{"start":1766405394976,"stop":1766405416784,"duration":21808},"status":"passed","severity":"normal"}]
