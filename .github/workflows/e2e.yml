@@ -33,9 +33,7 @@ jobs:
         run: rm -rf target/allure-results
 
       - name: Run E2E Tests
-        run: mvn clean test \
-          -DsuiteXmlFile=src/test/resources/suites/testng-e2e.xml \
-          -Denv=dev-test
+        run: mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng-e2e.xml -Denv=dev-test
 
       - name: Generate Allure Report
         if: always()
