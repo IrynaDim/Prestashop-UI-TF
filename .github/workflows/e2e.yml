@@ -33,7 +33,9 @@ jobs:
         run: rm -rf target/allure-results
 
       - name: Run E2E Tests
-        run: mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng-e2e.xml -Denv=dev-test
+        run: mvn clean test \
+          -DsuiteXmlFile=src/test/resources/suites/testng-e2e.xml \
+          -Denv=dev-test
 
       - name: Generate Allure Report
         if: always()
@@ -48,7 +50,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-report
-          destination_dir: allure-e2e-ui
+          destination_dir: allure-e2e-ui/${{ github.run_id }}
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
 
@@ -56,4 +58,4 @@ jobs:
         if: always()
         run: |
           echo "### Allure E2E UI report" >> $GITHUB_STEP_SUMMARY
-          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-e2e-ui/" >> $GITHUB_STEP_SUMMARY
+          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-e2e-ui/${{ github.run_id }}/" >> $GITHUB_STEP_SUMMARY
