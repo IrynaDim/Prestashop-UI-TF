@@ -3,9 +3,9 @@ package prestashop.steps;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import lombok.extern.slf4j.Slf4j;
+import prestashop.config.TestConfig;
 import prestashop.model.dto.ProductInfo;
 import prestashop.pages.MainPage;
-import prestashop.config.EnvConfig;
 import prestashop.util.PriceUtil;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class MainPageSteps extends BaseSteps {
     // --- General actions ---
     public MainPageSteps openMainPage() {
         step("Open main page");
-        page.navigate(EnvConfig.baseUrl());
+        page.navigate(TestConfig.BASE_URL);
         mainPage.waitForPageLoaded();
         return this;
     }

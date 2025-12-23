@@ -15,7 +15,7 @@ import prestashop.tests.BaseTest;
 
 public class AddProductsToCartTest extends BaseTest {
 
-    @Test(groups = TestGroup.E2E)
+    @Test(groups = TestGroup.RELEASE)
     @Issue("E2E-02")
     public void shouldCompleteCheckoutSuccessfully() {
 

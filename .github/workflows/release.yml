@@ -1,4 +1,4 @@
-name: Functional Tests (UI)
+name: Release Tests (UI)
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 jobs:
-  functional-ui:
+  release-ui:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,9 +29,11 @@ jobs:
       - name: Install Allure CLI
         run: npm i -g allure-commandline
 
-      - name: Run Functional UI Tests
-        continue-on-error: true
-        run: mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng-functional.xml -Denv=dev-test
+      - name: Clean Allure results
+        run: rm -rf target/allure-results
+
+      - name: Run Release Tests
+        run: mvn clean test -Dgroups=RELEASE -Denv=dev-test
 
       - name: Generate Allure Report
         if: always()
@@ -46,12 +48,12 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-report
-          destination_dir: allure-functional-ui
+          destination_dir: allure-release-ui/${{ github.run_id }}
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
 
       - name: Add Allure Report URL to summary
         if: always()
         run: |
-          echo "### Allure Functional UI report" >> $GITHUB_STEP_SUMMARY
-          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-functional-ui/" >> $GITHUB_STEP_SUMMARY
+          echo "### Allure Release UI report" >> $GITHUB_STEP_SUMMARY
+          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-release-ui/${{ github.run_id }}/" >> $GITHUB_STEP_SUMMARY

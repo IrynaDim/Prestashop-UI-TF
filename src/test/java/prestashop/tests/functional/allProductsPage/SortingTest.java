@@ -1,4 +1,4 @@
-package prestashop.tests.functional.allProducts;
+package prestashop.tests.functional.allProductsPage;
 
 import io.qameta.allure.Issue;
 import org.testng.Assert;
@@ -22,7 +22,7 @@ public class SortingTest extends BaseTest {
         allProductsSteps = mainPageSteps.goToAllProductsPage();
     }
 
-    @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Name, A -> Z - list is alphabetically ascending")
+    @Test(groups = TestGroup.CATALOG, description = "Sorting: Name, A -> Z - list is alphabetically ascending")
     @Issue("FUNC-03")
     public void shouldSortProductsByNameAscending() {
         List<ProductInfo> products =
@@ -34,7 +34,7 @@ public class SortingTest extends BaseTest {
                 "Product titles should be sorted alphabetically (A → Z)");
     }
 
-    @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Name, Z -> A - list is alphabetically descending")
+    @Test(groups = TestGroup.CATALOG, description = "Sorting: Name, Z -> A - list is alphabetically descending")
     @Issue("FUNC-04")
     public void shouldSortProductsByNameDescending() {
         List<ProductInfo> products =
@@ -46,7 +46,7 @@ public class SortingTest extends BaseTest {
                 "Product titles should be sorted alphabetically (Z → A)");
     }
 
-    @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Price, low -> high - ascending by price")
+    @Test(groups = TestGroup.CATALOG, description = "Sorting: Price, low -> high - ascending by price")
     @Issue("FUNC-05")
     public void shouldSortProductsByPriceAscending() {
         List<ProductInfo> products =
@@ -58,7 +58,7 @@ public class SortingTest extends BaseTest {
                 "Product prices should be sorted ascending (low → high)");
     }
 
-    @Test(groups = TestGroup.FUNCTIONAL, description = "Sorting: Price, high -> low - descending by price")
+    @Test(groups = TestGroup.CATALOG, description = "Sorting: Price, high -> low - descending by price")
     @Issue("FUNC-06")
     public void shouldSortProductsByPriceDescending() {
         List<ProductInfo> products =

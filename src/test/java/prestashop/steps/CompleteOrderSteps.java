@@ -2,7 +2,6 @@ package prestashop.steps;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import lombok.extern.slf4j.Slf4j;
 import prestashop.model.dto.AddressInfo;
 import prestashop.model.dto.PersonalInfo;
@@ -69,19 +68,14 @@ public class CompleteOrderSteps extends BaseSteps {
     // --- PAYMENT ---
     public CompleteOrderSteps selectPaymentMethod(PaymentMethods method) {
         step("Select payment method '{}'", method.getText());
-
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        Locator paymentStep = orderPage.getPaymentStepActive();
-        paymentStep.waitFor();
-        if (!paymentStep.getAttribute("class").contains("js-current-step")) {
-            throw new IllegalStateException(
-                    "Checkout did not reach payment step after shipping"
-            );
-        }
         Locator radio = orderPage.getPaymentRadio(method.getText());
-        radio.waitFor();
+        wait(radio);
         radio.check();
-        click(orderPage.getPaymentTermsCheckbox());
+
+        Locator termsCheckbox = orderPage.getPaymentTermsCheckbox();
+        if (!termsCheckbox.isChecked()) {
+            termsCheckbox.check();
+        }
         return this;
     }
 

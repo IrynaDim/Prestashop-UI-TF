@@ -21,7 +21,7 @@ public class CartPopupSteps extends BaseSteps {
         } catch (TimeoutError e) {
             if (popupPage.isCartEmptyMessage()) {
                 throw new IllegalStateException(
-                        "Cart is empty after clicking 'Add to cart'. " +
+                        "[KNOWN ISSUE] Cart is empty after clicking 'Add to cart'. " +
                                 "Product was not added — probable demo site lag."
                 );
             } else {

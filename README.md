@@ -22,11 +22,11 @@ This separation makes the tests more readable, reusable, and easy to maintain.
 
 ## 🚀 Test Execution
 
-Tests are executed using **Maven** and **TestNG** suites.
+Tests are executed using **Maven** and **TestNG** with group-based filtering instead of XML suites.
 
 Example command:
 ```bash
-mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng-smoke.xml -DthreadCount=2
+mvn clean test -Dgroups=smoke,catalog -DthreadCount=2
 ```
 
 You can also pass additional parameters for browser configuration:
@@ -34,17 +34,17 @@ You can also pass additional parameters for browser configuration:
 | **Parameter** | **Description** | **Example** |
 |----------------|-----------------|--------------|
 | `-Dbrowser` | Browser type (`chromium`, `firefox`, `webkit`) | `-Dbrowser=firefox` |
-| `-Dresolution` | Screen resolution (`FULL_HD`, `HD`, `MOBILE`) | `-Dresolution=FULL_HD` |
 | `-Dheadless` | Runs in headless mode (`true` / `false`) | `-Dheadless=false` |
 | `-DthreadCount` | Number of parallel threads | `-DthreadCount=3` |
 
-## 🧪 Test Types
+## 🧪 Test Groups
 
-| 🧩 **Test Type** | **Description** |
-|------------------|------------------|
-| **Smoke Tests** | Check critical UI elements such as navigation menus, language dropdowns, and links. |
-| **Functional Tests** | Validate page-specific logic — e.g., sorting, search results, registration forms, and price parsing. |
-| **End-to-End (E2E)** | Cover a complete purchase flow — from searching for a product to order confirmation. |
+| 🧩 **Test Type**     | **Description**                                                                                     |
+|----------------------|-----------------------------------------------------------------------------------------------------|
+| **Smoke**            | Fast sanity checks to ensure the application is up and basic UI elements are available.             |
+| **CATALOG**          | Catalog-related functionality: categories, product lists, sorting, and browsing.                |
+| **UI_REGRESSION** | UI and layout validation: labels, text, visual consistency, navigation. |
+| **RELEASE** | Critical end-to-end flows that block a release if failed.                                |
 
 ## 📊 Allure Reporting
 
