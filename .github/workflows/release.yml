@@ -33,7 +33,7 @@ jobs:
         run: rm -rf target/allure-results
 
       - name: Run Release Tests
-        run: mvn clean test -Dgroups=RELEASE
+        run: mvn clean test -Dgroups=release
 
       - name: Generate Allure Report
         if: always()

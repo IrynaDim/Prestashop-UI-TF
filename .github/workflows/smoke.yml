@@ -33,7 +33,7 @@ jobs:
         run: rm -rf target/allure-results
 
       - name: Run Smoke Tests
-        run: mvn clean test -Dgroups=SMOKE
+        run: mvn clean test -Dgroups=smoke
 
       - name: Generate Allure Report
         if: always()

@@ -34,7 +34,7 @@ jobs:
 
       - name: Run Regression UI Tests
         continue-on-error: true
-        run: mvn clean test -Dgroups=CATALOG,UI_REGRESSION
+        run: mvn clean test -Dgroups=catalog,ui_regression
 
       - name: Generate Allure Report
         if: always()
