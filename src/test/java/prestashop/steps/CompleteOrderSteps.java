@@ -68,11 +68,10 @@ public class CompleteOrderSteps extends BaseSteps {
     // --- PAYMENT ---
     public CompleteOrderSteps selectPaymentMethod(PaymentMethods method) {
         step("Select payment method '{}'", method.getText());
-        Locator radio = orderPage.getPaymentRadio(method.getText());
-        wait(radio);
-        radio.check();
-
+        Locator paymentOption = orderPage.getPaymentOption(method.getText());
+        click(paymentOption);
         Locator termsCheckbox = orderPage.getPaymentTermsCheckbox();
+        termsCheckbox.waitFor();
         if (!termsCheckbox.isChecked()) {
             termsCheckbox.check();
         }

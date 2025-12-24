@@ -11,7 +11,11 @@ import java.util.List;
 
 public class PopularProductsTest extends BaseTest {
 
-    @Test(groups = {TestGroup.SMOKE, TestGroup.CATALOG})
+    @Test(
+            groups = {TestGroup.SMOKE, TestGroup.CATALOG},
+            testName = "Main page: Popular products display name and price",
+            description = "Verify that each popular product on the main page has a displayed name and a valid price"
+    )
     @Issue("SMK-04")
     public void shouldDisplayNameAndPriceForEachPopularProduct() {
         List<ProductInfo> popularProducts = mainPageSteps
@@ -29,5 +33,4 @@ public class PopularProductsTest extends BaseTest {
             Assert.assertTrue(product.getPrice() > 0, "Product price should be greater than 0");
         }
     }
-
 }

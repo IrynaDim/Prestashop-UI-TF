@@ -107,10 +107,9 @@ public class CompleteOrderPage extends BasePage {
     }
 
     // --- Payment section ---
-    public Locator getPaymentRadio(String methodText) {
+    public Locator getPaymentOption(String methodText) {
         return frame.locator("label")
-                .filter(new Locator.FilterOptions().setHasText(methodText))
-                .locator("xpath=preceding-sibling::span/input");
+                .filter(new Locator.FilterOptions().setHasText(methodText));
     }
 
     public Locator getPaymentTermsCheckbox() {

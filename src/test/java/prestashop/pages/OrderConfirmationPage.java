@@ -5,10 +5,8 @@ import com.microsoft.playwright.Page;
 
 public class OrderConfirmationPage extends BasePage {
 
-    // confirmation
     private static final String CONFIRMATION_MESSAGE = "h3.h1.card-title";
 
-    // prices
     private static final String SUBTOTAL_PRICE =
             "tr:has(td:text('Subtotal')) td:nth-child(2)";
     private static final String SHIPPING_PRICE =
@@ -16,29 +14,23 @@ public class OrderConfirmationPage extends BasePage {
     private static final String TOTAL_PRICE =
             "tr.total-value.font-weight-bold td:nth-child(2)";
 
-    // products
     private static final String ORDER_ITEMS =
             ".order-confirmation-table .order-line";
     private static final String PRODUCT_NAME =
             ".details span";
 
-    // кнопка кастомизации
     private static final String CUSTOMIZATION_LINK =
             ".order-confirmation-table .customizations a";
 
-    // модалка
     private static final String CUSTOMIZATION_MODAL =
-            "#product-customizations-modal-1";
+            "[id^='product-customizations-modal']";
 
-    // значение кастомизации
     private static final String CUSTOMIZATION_VALUE =
-            "#product-customizations-modal-1 .product-customization-line .value";
+            "[id^='product-customizations-modal'] .product-customization-line .value";
 
-    // кнопка закрытия
     private static final String MODAL_CLOSE_BUTTON =
-            "#product-customizations-modal-1 button.close";
+            "[id^='product-customizations-modal'] button.close";
 
-    // order details
     private static final String ORDER_REFERENCE =
             "#order-reference-value";
     private static final String PAYMENT_METHOD =

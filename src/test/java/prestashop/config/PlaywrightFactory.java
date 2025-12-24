@@ -21,7 +21,7 @@ public final class PlaywrightFactory {
         playwright.set(Playwright.create());
 
         String browserParam = System.getProperty("browser", System.getenv("BROWSER"));
-        boolean showBrowser = true;
+        boolean showBrowser = Boolean.parseBoolean(System.getProperty("headless", System.getenv("HEADLESS")));
 
         log.info("Environment params: browser='{}', showBrowser={}",
                 browserParam, showBrowser);

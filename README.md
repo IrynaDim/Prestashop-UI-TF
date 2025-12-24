@@ -39,12 +39,12 @@ You can also pass additional parameters for browser configuration:
 
 ## 🧪 Test Groups
 
-| 🧩 **Test Type**     | **Description**                                                                                     |
-|----------------------|-----------------------------------------------------------------------------------------------------|
-| **Smoke**            | Fast sanity checks to ensure the application is up and basic UI elements are available.             |
-| **CATALOG**          | Catalog-related functionality: categories, product lists, sorting, and browsing.                |
+| 🧩 **Test Type**  | **Description**                                                                                     |
+|-------------------|-----------------------------------------------------------------------------------------------------|
+| **SMOKE**         | Fast sanity checks to ensure the application is up and basic UI elements are available.             |
+| **CATALOG**       | Catalog-related functionality: categories, product lists, sorting, and browsing.                |
 | **UI_REGRESSION** | UI and layout validation: labels, text, visual consistency, navigation. |
-| **RELEASE** | Critical end-to-end flows that block a release if failed.                                |
+| **RELEASE**       | Critical end-to-end flows that block a release if failed.                                |
 
 ## 📊 Allure Reporting
 
@@ -58,7 +58,7 @@ allure serve target/allure-results
 ```
 
 Allure logging exemples:
-![img_2.png](img_2.png)
+![img.png](img.png)
 
 Each failed test automatically attaches:
 A screenshot of the page at the moment of failure
@@ -66,7 +66,9 @@ The current page URL
 The corresponding log message for easier debugging
 This behavior is handled by a custom TestNG listener (TestListener) that integrates Playwright screenshots with Allure attachments.
 
-![img.png](img.png)
+![img_3.png](img_3.png)
+
+![img_4.png](img_4.png)
 
 ## 🪵 Logging
 

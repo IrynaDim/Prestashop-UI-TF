@@ -1,11 +1,14 @@
 package prestashop.tests.functional.allProductsPage;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import prestashop.constants.TestGroup;
 import prestashop.model.dto.ProductInfo;
+import prestashop.model.enums.SortField;
 import prestashop.model.enums.SortingOptions;
 import prestashop.steps.AllProductsSteps;
 import prestashop.tests.BaseTest;
@@ -22,59 +25,64 @@ public class SortingTest extends BaseTest {
         allProductsSteps = mainPageSteps.goToAllProductsPage();
     }
 
-    @Test(groups = TestGroup.CATALOG, description = "Sorting: Name, A -> Z - list is alphabetically ascending")
+    @Test(
+            groups = TestGroup.CATALOG,
+            dataProvider = "sortingData"
+    )
     @Issue("FUNC-03")
-    public void shouldSortProductsByNameAscending() {
+    public void shouldSortProductsCorrectly(
+            SortingOptions sortingOption,
+            String allureTitle,
+            Comparator<?> comparator,
+            SortField field
+    ) {
+        Allure.getLifecycle().updateTestCase(tc -> tc.setName(allureTitle));
+
         List<ProductInfo> products =
-                allProductsSteps.getProductsBySorting(SortingOptions.NAME_ASC);
+                allProductsSteps.getProductsBySorting(sortingOption);
 
-        assertNotEmpty(products, "Product list should not be empty");
+        Assert.assertFalse(products.isEmpty(), "Product list should not be empty");
 
-        assertSorted(getTitles(products), Comparator.naturalOrder(),
-                "Product titles should be sorted alphabetically (A → Z)");
+        if (field == SortField.TITLE) {
+            assertSorted(getTitles(products), (Comparator<String>) comparator, "Product titles are not sorted correctly"
+            );
+        } else {
+            assertSorted(getPrices(products), (Comparator<Double>) comparator, "Product prices are not sorted correctly"
+            );
+        }
     }
 
-    @Test(groups = TestGroup.CATALOG, description = "Sorting: Name, Z -> A - list is alphabetically descending")
-    @Issue("FUNC-04")
-    public void shouldSortProductsByNameDescending() {
-        List<ProductInfo> products =
-                allProductsSteps.getProductsBySorting(SortingOptions.NAME_DESC);
-
-        assertNotEmpty(products, "Product list should not be empty");
-
-        assertSorted(getTitles(products), Comparator.reverseOrder(),
-                "Product titles should be sorted alphabetically (Z → A)");
-    }
-
-    @Test(groups = TestGroup.CATALOG, description = "Sorting: Price, low -> high - ascending by price")
-    @Issue("FUNC-05")
-    public void shouldSortProductsByPriceAscending() {
-        List<ProductInfo> products =
-                allProductsSteps.getProductsBySorting(SortingOptions.PRICE_ASC);
-
-        assertNotEmpty(products, "Product list should not be empty");
-
-        assertSorted(getPrices(products), Comparator.naturalOrder(),
-                "Product prices should be sorted ascending (low → high)");
-    }
-
-    @Test(groups = TestGroup.CATALOG, description = "Sorting: Price, high -> low - descending by price")
-    @Issue("FUNC-06")
-    public void shouldSortProductsByPriceDescending() {
-        List<ProductInfo> products =
-                allProductsSteps.getProductsBySorting(SortingOptions.PRICE_DESC);
-
-        assertNotEmpty(products, "Product list should not be empty");
-
-        assertSorted(getPrices(products), Comparator.reverseOrder(),
-                "Product prices should be sorted descending (high → low)");
+    @DataProvider(name = "sortingData")
+    public Object[][] sortingData() {
+        return new Object[][]{
+                {
+                        SortingOptions.NAME_ASC,
+                        "Sorting: Name A → Z",
+                        Comparator.naturalOrder(),
+                        SortField.TITLE
+                },
+                {
+                        SortingOptions.NAME_DESC,
+                        "Sorting: Name Z → A",
+                        Comparator.reverseOrder(),
+                        SortField.TITLE
+                },
+                {
+                        SortingOptions.PRICE_ASC,
+                        "Sorting: Price low → high",
+                        Comparator.naturalOrder(),
+                        SortField.PRICE
+                },
+                {
+                        SortingOptions.PRICE_DESC,
+                        "Sorting: Price high → low",
+                        Comparator.reverseOrder(),
+                        SortField.PRICE
+                }
+        };
     }
 
     // --- Utility methods ---
-
-    private void assertNotEmpty(List<?> list, String message) {
-        Assert.assertFalse(list.isEmpty(), message);
-    }
 
     private <T extends Comparable<T>> void assertSorted(List<T> actual, Comparator<T> comparator, String message) {
         List<T> sorted = new ArrayList<>(actual);

@@ -24,27 +24,34 @@ public class CheckoutFlowSteps extends BaseSteps {
     }
 
     public void addProductsToCart(ProductItem... items) {
-        step("Start adding multiple products to cart. Total items: {}", items.length);
+
         for (int i = 0; i < items.length; i++) {
             ProductItem item = items[i];
+            String productName = getProductName(item.getProduct());
 
-            if (item.getCategory() != null) {
-                headerSteps.searchProduct(item.getCategory().getName());
-            } else {
-                headerSteps.searchProduct(getProductName(item.getProduct()));
-            }
-            searchSteps.clickOnProductByTitle(getProductName(item.getProduct()));
+            io.qameta.allure.Allure.step("Add product to cart: " + productName, () -> {
 
-            if (item.getOptions() != null) {
-                buyingSteps.customizeProduct(item.getOptions());
-            }
-            buyingSteps.addProductToCart();
+                if (item.getCategory() != null) {
+                    headerSteps.searchProduct(item.getCategory().getName());
+                } else {
+                    headerSteps.searchProduct(productName);
+                }
+                searchSteps.clickOnProductByTitle(productName);
+
+                if (item.getOptions() != null) {
+                    buyingSteps.customizeProduct(item.getOptions());
+                }
+
+                buyingSteps.addProductToCart();
+            });
 
             if (i < items.length - 1) {
                 cartPopupSteps.clickContinueShopping();
             } else {
-                cartPopupSteps.clickProceedToCheckout();
-                shoppingCartSteps.clickProceedToCheckout();
+                io.qameta.allure.Allure.step("Proceed to checkout", () -> {
+                    cartPopupSteps.clickProceedToCheckout();
+                    shoppingCartSteps.clickProceedToCheckout();
+                });
             }
         }
     }

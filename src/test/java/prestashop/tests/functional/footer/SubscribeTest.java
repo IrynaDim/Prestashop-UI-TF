@@ -1,4 +1,4 @@
-package prestashop.tests.functional.mainPage;
+package prestashop.tests.functional.footer;
 
 import io.qameta.allure.Issue;
 import org.testng.Assert;
@@ -8,7 +8,11 @@ import prestashop.tests.BaseTest;
 
 public class SubscribeTest extends BaseTest {
 
-    @Test(groups = {TestGroup.UI_REGRESSION})
+    @Test(
+            groups = {TestGroup.UI_REGRESSION},
+            testName = "Footer: Subscribe button text is displayed in uppercase",
+            description = "Verify that the Subscribe button text is visually displayed in uppercase using CSS text-transform"
+    )
     @Issue("FUNC-01")
     public void shouldDisplaySubscribeButtonTextInUppercase() {
         String raw = footerSteps.getSubscribeButtonValue();
@@ -20,7 +24,11 @@ public class SubscribeTest extends BaseTest {
                 "Subscribe button must be visually uppercase via CSS");
     }
 
-    @Test(groups = {TestGroup.SMOKE, TestGroup.UI_REGRESSION})
+    @Test(
+            groups = {TestGroup.SMOKE, TestGroup.UI_REGRESSION},
+            testName = "Footer: Newsletter label text is displayed correctly",
+            description = "Verify that the newsletter label text matches the expected value"
+    )
     @Issue("FUNC-08")
     public void shouldDisplayCorrectNewsletterLabelText() {
         String labelText = footerSteps.getNewsletterLabelText();
