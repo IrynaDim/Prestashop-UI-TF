@@ -33,7 +33,7 @@ jobs:
         run: rm -rf target/allure-results
 
       - name: Run Smoke Tests
-        run: mvn clean test -Dgroups=SMOKE -Denv=dev-test -Dbrowser=chromium
+        run: mvn clean test -Dgroups=SMOKE
 
       - name: Generate Allure Report
         if: always()
@@ -53,4 +53,11 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-report
           destination_dir: allure-smoke-ui/${{ github.run_id }}
-          user_nam_
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add Allure Report URL to summary
+        if: always()
+        run: |
+          echo "### Allure SMOKE report" >> $GITHUB_STEP_SUMMARY
+          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-smoke-ui/${{ github.run_id }}/" >> $GITHUB_STEP_SUMMARY
