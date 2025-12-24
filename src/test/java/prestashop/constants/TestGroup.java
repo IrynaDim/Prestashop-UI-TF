@@ -1,9 +1,11 @@
 package prestashop.constants;
 
 public class TestGroup {
-    private TestGroup() {}
+    private TestGroup() {
+    }
 
-    public static final String SMOKE       = "smoke";
-    public static final String FUNCTIONAL  = "functional";
-    public static final String E2E         = "e2e";
+    public static final String SMOKE = "smoke";
+    public static final String UI_REGRESSION = "ui_regression";
+    public static final String RELEASE = "release";
+    public static final String CATALOG = "catalog";
 }

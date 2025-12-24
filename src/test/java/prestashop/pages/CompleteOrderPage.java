@@ -25,15 +25,12 @@ public class CompleteOrderPage extends BasePage {
     private static final String SHIPPING_OPTION = ".delivery-option";
     private static final String CONFIRM_DELIVERY_BUTTON = "button[name='confirmDeliveryOption']";
 
-    private static final String PAYMENT_TERMS_CHECKBOX = "input[name^='conditions_to_approve']";
+    private static final String PAYMENT_TERMS_CHECKBOX = "input[name='conditions_to_approve[terms-and-conditions]']";
     private static final String PLACE_ORDER_BUTTON = "#payment-confirmation button.btn.btn-primary.center-block";
 
     private static final String SUBTOTAL_VALUE = "#cart-subtotal-products .value";
     private static final String SHIPPING_VALUE = "#cart-subtotal-shipping .value";
     private static final String TOTAL_VALUE = ".cart-summary-line.cart-total .value";
-
-    private static final String PAYMENT_SECTION = "#checkout-payment-step";
-    private static final String PAYMENT_STEP_ACTIVE = "#checkout-payment-step.-current";
 
     public CompleteOrderPage(Page page) {
         super(page);
@@ -110,14 +107,9 @@ public class CompleteOrderPage extends BasePage {
     }
 
     // --- Payment section ---
-    public Locator getPaymentRadio(String methodText) {
+    public Locator getPaymentOption(String methodText) {
         return frame.locator("label")
-                .filter(new Locator.FilterOptions().setHasText(methodText))
-                .locator("xpath=preceding-sibling::span/input");
-    }
-
-    public Locator getPaymentStepActive() {
-        return frame.locator(PAYMENT_STEP_ACTIVE);
+                .filter(new Locator.FilterOptions().setHasText(methodText));
     }
 
     public Locator getPaymentTermsCheckbox() {

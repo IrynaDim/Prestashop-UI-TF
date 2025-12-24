@@ -3,6 +3,9 @@ name: Smoke Tests (UI)
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   smoke-ui:
     runs-on: ubuntu-latest
@@ -18,16 +21,19 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Run Smoke Tests
-        run: |
-          mvn clean test \
-            -DsuiteXmlFile=src/test/resources/suites/testng-smoke.xml \
-            -Denv=dev-test \
-            -Dbrowser=chromium
+      - name: Set up Node (for Allure CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      - name: Install Allure
-        if: always()
-        run: npm install -g allure-commandline --save-dev
+      - name: Install Allure CLI
+        run: npm i -g allure-commandline
+
+      - name: Clean Allure results
+        run: rm -rf target/allure-results
+
+      - name: Run Smoke Tests
+        run: mvn clean test -Dgroups=SMOKE
 
       - name: Generate Allure Report
         if: always()
@@ -46,13 +52,12 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-report
-          destination_dir: allure-smoke-ui
+          destination_dir: allure-smoke-ui/${{ github.run_id }}
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
 
       - name: Add Allure Report URL to summary
         if: always()
         run: |
-          echo "### ✅ Allure Smoke UI report published successfully!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 [Open Allure Smoke UI Report](https://irynadim.github.io/Prestashop-UI-TF/allure-smoke-ui/)" >> $GITHUB_STEP_SUMMARY
+          echo "### Allure SMOKE report" >> $GITHUB_STEP_SUMMARY
+          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-smoke-ui/${{ github.run_id }}/" >> $GITHUB_STEP_SUMMARY

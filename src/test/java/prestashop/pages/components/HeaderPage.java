@@ -15,7 +15,6 @@ public class HeaderPage extends BasePage {
     private static final String SEARCH_FIELD = ".ui-autocomplete-input";
     private static final String MENU_ITEM = "a.dropdown-item";
     private static final String SUBMENU_ITEMS = "ul.top-menu > li.category > a.dropdown-item.dropdown-submenu";
-    private static final String SIGN_IN_BUTTON = "div.user-info a";
     private static final String USER_INFO_NAME = "div.user-info span.hidden-sm-down";
 
     public HeaderPage(Page page) {
@@ -45,10 +44,6 @@ public class HeaderPage extends BasePage {
         return frame.locator(MENU_ITEM)
                 .filter(new Locator.FilterOptions().setHasText(categoryName))
                 .locator("..").locator(SUBMENU_ITEMS);
-    }
-
-    public Locator getSignInButton() {
-        return frame.locator(SIGN_IN_BUTTON);
     }
 
     public Locator getLoggedUserName() {

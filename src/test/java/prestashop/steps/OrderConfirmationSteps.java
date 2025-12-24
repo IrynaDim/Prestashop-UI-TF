@@ -1,6 +1,8 @@
 package prestashop.steps;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.TimeoutError;
 import lombok.extern.slf4j.Slf4j;
 import prestashop.pages.OrderConfirmationPage;
 import prestashop.util.PriceUtil;
@@ -22,17 +24,23 @@ public class OrderConfirmationSteps extends BaseSteps {
 
     public double getSubtotal() {
         step("Read subtotal price");
-        return PriceUtil.parsePrice(text(page.subtotalPrice()));
+        Locator subtotal = page.subtotalPrice();
+        subtotal.scrollIntoViewIfNeeded();
+        return PriceUtil.parsePrice(text(subtotal));
     }
 
     public double getShippingPrice() {
         step("Read shipping price");
-        return PriceUtil.parsePrice(text(page.shippingPrice()));
+        Locator shippingPrice = page.shippingPrice();
+        shippingPrice.scrollIntoViewIfNeeded();
+        return PriceUtil.parsePrice(text(shippingPrice));
     }
 
     public double getTotalPrice() {
         step("Read total price");
-        return PriceUtil.parsePrice(text(page.totalPrice()));
+        Locator total = page.totalPrice();
+        total.scrollIntoViewIfNeeded();
+        return PriceUtil.parsePrice(text(total));
     }
 
     public int getProductsCount() {
@@ -51,26 +59,36 @@ public class OrderConfirmationSteps extends BaseSteps {
     public String getCustomizationText() {
         step("Open product customization modal");
         page.customizationLink().first().click();
-        page.customizationModal().waitFor();
-        String value = text(page.customizationValue()).trim();
+
+        Locator modal = page.customizationModal();
+        wait(modal);
+
+        String value = page.customizationValue().textContent().trim();
         page.customizationModalClose().click();
+
         return value;
     }
 
     public String getOrderReference() {
         step("Read order reference");
-        return text(page.orderReference())
+        Locator orderReference = page.orderReference();
+        orderReference.scrollIntoViewIfNeeded();
+        return text(orderReference)
                 .replace("Order reference:", "")
                 .trim();
     }
 
     public String getPaymentMethod() {
         step("Read payment method");
-        return text(page.paymentMethod());
+        Locator paymentMethod = page.paymentMethod();
+        paymentMethod.scrollIntoViewIfNeeded();
+        return text(paymentMethod);
     }
 
     public String getShippingMethod() {
         step("Read shipping method");
-        return text(page.shippingMethod());
+        Locator shippingMethod = page.shippingMethod();
+        shippingMethod.scrollIntoViewIfNeeded();
+        return text(shippingMethod);
     }
 }

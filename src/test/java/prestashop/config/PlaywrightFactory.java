@@ -5,7 +5,6 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import lombok.extern.slf4j.Slf4j;
-import prestashop.constants.Resolution;
 
 @Slf4j
 public final class PlaywrightFactory {
@@ -22,17 +21,14 @@ public final class PlaywrightFactory {
         playwright.set(Playwright.create());
 
         String browserParam = System.getProperty("browser", System.getenv("BROWSER"));
-        String resolutionParam = System.getProperty("resolution", System.getenv("RESOLUTION"));
         boolean showBrowser = Boolean.parseBoolean(System.getProperty("headless", System.getenv("HEADLESS")));
-        Resolution resolution = Resolution.from(resolutionParam);
 
-        log.info("Environment params: browser='{}', resolution='{}' ({}x{}), showBrowser={}",
-                browserParam, resolution, resolution.width(), resolution.height(), showBrowser);
+        log.info("Environment params: browser='{}', showBrowser={}",
+                browserParam, showBrowser);
 
         browser.set(BrowserProvider.getBrowser(playwright.get(), browserParam, showBrowser));
 
-        Browser.NewContextOptions contextOptions = new Browser.NewContextOptions()
-                .setViewportSize(resolution.width(), resolution.height());
+        Browser.NewContextOptions contextOptions = new Browser.NewContextOptions();
 
         context.set(browser.get().newContext(contextOptions));
         page.set(context.get().newPage());

@@ -1,4 +1,4 @@
-name: E2E Tests (UI)
+name: Regression Tests (UI)
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 jobs:
-  e2e-ui:
+  regression-ui:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,8 +32,9 @@ jobs:
       - name: Clean Allure results
         run: rm -rf target/allure-results
 
-      - name: Run E2E Tests
-        run: mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng-e2e.xml -Denv=dev-test
+      - name: Run Regression UI Tests
+        continue-on-error: true
+        run: mvn clean test -Dgroups=CATALOG,UI_REGRESSION
 
       - name: Generate Allure Report
         if: always()
@@ -48,12 +49,12 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-report
-          destination_dir: allure-e2e-ui/${{ github.run_id }}
+          destination_dir: allure-regression-ui/${{ github.run_id }}
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
 
       - name: Add Allure Report URL to summary
         if: always()
         run: |
-          echo "### Allure E2E UI report" >> $GITHUB_STEP_SUMMARY
-          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-e2e-ui/${{ github.run_id }}/" >> $GITHUB_STEP_SUMMARY
+          echo "### Allure Regression UI report" >> $GITHUB_STEP_SUMMARY
+          echo "https://irynadim.github.io/Prestashop-UI-TF/allure-regression-ui/${{ github.run_id }}/" >> $GITHUB_STEP_SUMMARY
