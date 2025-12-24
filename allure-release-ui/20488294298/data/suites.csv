@@ -1,0 +1,2 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","33597","Verify that a user can add multiple products to the cart, complete checkout, and see a successful order confirmation","Surefire suite","2025-12-24","broken","2025-12-24","prestashop.tests.e2e.AddProductsToCartTest","Surefire test","prestashop.tests.e2e.AddProductsToCartTest","shouldCompleteCheckoutSuccessfully"
