@@ -1,7 +1,6 @@
 package prestashop.tests;
 
 import com.microsoft.playwright.Page;
-import io.qameta.allure.Allure;
 import io.qameta.allure.testng.AllureTestNg;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.ITestResult;
@@ -14,7 +13,6 @@ import prestashop.steps.HeaderSteps;
 import prestashop.steps.MainPageSteps;
 import prestashop.util.FailureArtifacts;
 
-import java.io.ByteArrayInputStream;
 import java.lang.reflect.Method;
 
 @Slf4j
@@ -44,7 +42,7 @@ public abstract class BaseTest {
         if (!result.isSuccess()) {
             FailureArtifacts.attach(PlaywrightFactory.getPage());
         }
-        PlaywrightFactory.close();
+        io.qameta.allure.Allure.step("Close browser and all resources", PlaywrightFactory::close);
     }
 
     protected void openDefaultPage() {
